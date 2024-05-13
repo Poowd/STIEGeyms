@@ -1,0 +1,23 @@
+* {
+  list-style: none;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+th,
+td {
+  cursor: pointer;
+  padding: 0.5em 2.5em !important;
+}
+
+.custom-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+form {
+  overflow-x: hidden;
+}

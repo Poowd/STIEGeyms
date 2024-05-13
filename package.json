@@ -1,0 +1,12 @@
+{
+  "name": "sticlasskode",
+  "version": "1.0.0",
+  "description": "> [!NOTE]\r > How to `run` once pulled?",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd ./client && npm start",
+    "server": "cd ./server && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}
