@@ -19,7 +19,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "db_sticlasskode",
+  database: "db_stiegeyms",
 });
 
 //authentication of the account logged in
@@ -32,13 +32,10 @@ const verifyUser = (req, res, next) => {
       if (err) {
         return res.json({ Message: "Authentication Error." });
       } else {
-        req.Name = decoded.Name;
-        req.UserType = decoded.UserType;
         req.UUID = decoded.UUID;
-        req.File_Maintainance = decoded.File_Maintainance;
-        req.Access_View = decoded.Access_View;
-        req.Access_Edit = decoded.Access_Edit;
-        req.Access_Insert = decoded.Access_Insert;
+        req.USERNAME = decoded.USERNAME;
+        req.USER_TYPE = decoded.USER_TYPE;
+        req.AUTH = decoded.AUTH;
         next();
       }
     });
@@ -48,42 +45,31 @@ const verifyUser = (req, res, next) => {
 app.get("/", verifyUser, (req, res) => {
   return res.json({
     Status: "Success",
-    Name: req.Name,
-    UserType: req.UserType,
     UUID: req.UUID,
-    File_Maintainance: req.File_Maintainance,
-    Access_View: req.Access_View,
-    Access_Edit: req.Access_Edit,
-    Access_Insert: req.Access_Insert,
+    USERNAME: req.USERNAME,
+    USER_TYPE: req.USER_TYPE,
+    AUTH: req.AUTH,
   });
 });
 
 app.post("/login", (req, res) => {
   const sql =
-    "SELECT * FROM tbl_user INNER JOIN tbl_permission ON tbl_user.UUID=tbl_permission.UUID WHERE Email = ? AND Password = ?";
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
+    "SELECT * FROM user INNER JOIN permission ON user.UUID = permission.UUID WHERE Username = ? AND Password = ?";
+  db.query(sql, [req.body.username, req.body.password], (err, data) => {
     if (err) return res.json({ Message: "Server Sided Error" });
     if (data.length > 0) {
-      const FirstName = data[0].FirstName;
-      const LastName = data[0].LastName;
-      const UserType = data[0].UserType;
       const UUID = data[0].UUID;
-      const Name = LastName.concat(", ", FirstName);
+      const USERNAME = data[0].Username;
+      const USER_TYPE = data[0].USER_TYPE;
 
-      const File_Maintainance = data[0].File_Maintainance;
-      const Access_View = data[0].Access_View;
-      const Access_Edit = data[0].Access_Edit;
-      const Access_Insert = data[0].Access_Insert;
+      const AUTH = data[0].AUTH;
 
       const token = jwt.sign(
         {
-          Name,
-          UserType,
           UUID,
-          File_Maintainance,
-          Access_View,
-          Access_Edit,
-          Access_Insert,
+          USERNAME,
+          USER_TYPE,
+          AUTH,
         },
         "our-jsonwebtoken-secret-key",
         { expiresIn: "1d" }

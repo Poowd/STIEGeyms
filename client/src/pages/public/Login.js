@@ -8,7 +8,7 @@ import logo from "../../assets/icon/gamer.png";
 export function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -20,7 +20,7 @@ export function Login() {
       .post("http://localhost:8081/login", values) //stores in usestate values
       .then((res) => {
         if (res.data.Status === "Success") {
-          navigate("/"); //to dashboard
+          navigate("/home"); //to dashboard
           window.location.reload(true);
         } else {
           alert(res.data.Message);
@@ -39,7 +39,7 @@ export function Login() {
           className="h-100 w-100 bg-white rounded shadow-sm p-3"
           style={{
             backgroundImage:
-              "url('https://img.freepik.com/premium-photo/cartoon-fantasy-illustration-purple-galaxy-sky-with-moon-ground-surface-with-rocks-purple-galaxy-background-with-craters-lit-cracks_76964-151761.jpg?size=626&ext=jpg&ga=GA1.1.1369675164.1715472000&semt=ais_user')",
+              "url('https://images4.alphacoders.com/998/998560.jpg')",
             backgroundSize: "cover",
           }}
         >
@@ -71,11 +71,11 @@ export function Login() {
                         <input
                           className="form-control py-3 px-4 bg-transparent text-white"
                           type="text"
-                          name="Email"
-                          id="Email"
+                          name="Username"
+                          id="Username"
                           placeholder="Username"
                           onChange={(e) =>
-                            setValues({ ...values, email: e.target.value })
+                            setValues({ ...values, username: e.target.value })
                           }
                           required
                         ></input>

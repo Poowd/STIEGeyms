@@ -13,13 +13,10 @@ function App() {
   const [userdetails, setUserDetails] = useState({
     Auth: false,
     UUID: "",
-    Name: "",
+    USERNAME: "",
+    USER_TYPE: "",
+    AUTH: "",
     Message: "",
-    UserType: "",
-    File_Maintainance: "",
-    Access_icon: "",
-    Access_Edit: "",
-    Access_Insert: "",
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -37,25 +34,20 @@ function App() {
         setUserDetails({
           Auth: true,
           UUID: res.data.UUID,
-          Name: res.data.Name,
+          USERNAME: res.data.USERNAME,
+          USER_TYPE: res.data.USER_TYPE,
+          AUTH: res.data.AUTH,
           Message: res.data.Message,
-          UserType: res.data.UserType,
-          File_Maintainance: res.data.File_Maintainance,
-          Access_View: res.data.Access_View,
-          Access_Edit: res.data.Access_Edit,
-          Access_Insert: res.data.Access_Insert,
         });
       } else {
         setUserDetails({
           Auth: false,
           UUID: "",
-          Name: "",
+          UUID: "",
+          USERNAME: "",
+          USER_TYPE: "",
+          AUTH: "",
           Message: "",
-          UserType: "",
-          File_Maintainance: "False",
-          Access_View: "False",
-          Access_Edit: "False",
-          Access_Insert: "False",
         });
       }
     });
@@ -75,18 +67,24 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  //Darkers Color
+  //#171a1d
+  //Default
+  //bg-dark
+  //Supa high level dark
+  //#111315
+
   return (
-    <main className="bg-dark">
+    <main className="" style={{ backgroundColor: "#171a1d" }}>
       <header>{isLoading ? <FullscreenLoader /> : ""}</header>
       <main>
         {userdetails.Auth ? (
           <Routes>
-            {userdetails.UserType === "Admin" ? (
+            {userdetails.USER_TYPE === "Admin" ? (
               <>
-                <Route path="/" element={<Home />}></Route>
-                <Route path="/dash" element={"Hello"}></Route>
+                <Route path="/:page" element={<Home />}></Route>
               </>
-            ) : userdetails.UserType === "Student" ? (
+            ) : userdetails.USER_TYPE === "Student" ? (
               <>
                 <Route path="/" element={"dasdadsa"}></Route>
               </>

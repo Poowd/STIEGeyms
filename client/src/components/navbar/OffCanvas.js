@@ -37,9 +37,60 @@ export class OffCanvas extends React.Component {
           </button>
         </div>
         <div class="offcanvas-body">
-          <Link to={"/dash"}>
-            <button className="btn w-100 py-3 text-start fs-5 text-white">
-              Dash
+          <Link to={"/home"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Home
+            </button>
+          </Link>
+          <Link to={"/featured"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Featured
+            </button>
+          </Link>
+          <Link to={"/library"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Library
+            </button>
+          </Link>
+          <Link to={"/store"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Store
+            </button>
+          </Link>
+          <Link to={"/community"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Community
+            </button>
+          </Link>
+          <Link to={"/events"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Events
+            </button>
+          </Link>
+          <Link to={"/profile"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Profile
             </button>
           </Link>
           <Link to={"/"}>
