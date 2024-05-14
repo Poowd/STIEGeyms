@@ -84,7 +84,7 @@ function App() {
               <>
                 <Route path="/:page" element={<Home />}></Route>
               </>
-            ) : userdetails.USER_TYPE === "Student" ? (
+            ) : userdetails.USER_TYPE === "User" ? (
               <>
                 <Route path="/" element={"dasdadsa"}></Route>
               </>

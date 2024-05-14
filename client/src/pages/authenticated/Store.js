@@ -8,44 +8,50 @@ import { Card } from "../../components/card/Card";
 import { Modal } from "../../components/modal/Modal";
 import { Tag } from "../../components/tag/Tag";
 
-export function Library() {
+export function Store() {
   const params = useParams();
   const [placeholder, ssetPlaceholder] = useState([
     {
       image: "https://upload.wikimedia.org/wikipedia/en/1/1b/Outlast2.png",
       title: "Outlast 2",
-      description: "This is a sample description for the games.",
     },
     {
       image:
         "https://m.media-amazon.com/images/M/MV5BNmNhM2NjMTgtNmIyZC00ZmVjLTk4YWItZmZjNGY2NThiNDhkXkEyXkFqcGdeQXVyODU4MDU1NjU@._V1_FMjpg_UX1000_.jpg",
       title: "Valorant",
-      description: "This is a sample description for the games.",
     },
     {
       image:
         "https://images.g2a.com/360x600/1x1x1/terraria-steam-gift-global-i10000000238003/5ebbabf646177c06a555f152",
       title: "Terraria",
-      description: "This is a sample description for the games.",
     },
     {
       image:
         "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
       title: "Minecraft",
-      description: "This is a sample description for the games.",
     },
     {
       image:
         "https://upload.wikimedia.org/wikipedia/en/b/b7/Dead_by_Daylight_Steam_header.jpg",
       title: "Dead by Daylight",
-      description: "This is a sample description for the games.",
     },
     {
       image:
         "https://gamemusic.bn-ent.net/W4vE39ckQu/wp-content/uploads/2024/01/%E9%89%84%E6%8B%B38_%E9%85%8D%E4%BF%A1%E7%94%A8%E3%82%B8%E3%83%A3%E3%82%B1%E3%83%83%E3%83%88_KV1_01-scaled.jpg",
       title: "Tekken 8",
-      description: "This is a sample description for the games.",
     },
+  ]);
+  const [genres, setGenres] = useState([
+    "Action",
+    "Adventure",
+    "Casual",
+    "RPG",
+    "Simulation",
+    "Strategy",
+    "Sports",
+    "Puzzle",
+    "Relaxing",
+    "Virtual Reality",
   ]);
   const [selectedItem, setSelectedItem] = useState({
     image: "",
@@ -94,36 +100,6 @@ export function Library() {
             type="text"
             placeholder="Search"
           />
-          <div className="">
-            <button className="btn btn-primary" data-bs-toggle="dropdown">
-              &#9741;
-            </button>
-            <ul class="dropdown-menu bg-dark">
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  Starred
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  Most Played
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  Least Played
-                </a>
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  Reset Filter
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         <section className="col-lg-2 p-0">
           <main
@@ -133,9 +109,11 @@ export function Library() {
             <h6>Games in Library</h6>
             <hr />
             <ul className="p-0 m-0">
-              {placeholder.map((item, i) => (
+              {genres.map((item, i) => (
                 <li className="py-1">
-                  <span>{item.title}</span>
+                  <button className="btn text-light w-100 text-start">
+                    {item}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -206,17 +184,23 @@ export function Library() {
                               <main className="my-3">
                                 <section>
                                   <p>{item.description}</p>
-                                  <div className="bg-dark shadow-lg rounded p-3">
-                                    <h6>User History</h6>
+                                  <div className="bg-dark rounded shadow-lg p-3">
+                                    <h6>Specification</h6>
                                     <hr />
                                     <ul>
-                                      <li>Hours Played: </li>
-                                      <li>Times Opened: </li>
-                                      <li>Rating: </li>
-                                      <li>Date Acquired: </li>
+                                      <li>Device: </li>
+                                      <li>Storage: </li>
+                                      <li>RAM: </li>
+                                      <li>Graphics: </li>
+                                      <li>Free Storage: </li>
                                     </ul>
                                   </div>
                                 </section>
+                              </main>
+                              <main className="text-end">
+                                <button className="btn btn-info fw-semibold">
+                                  Add to Library
+                                </button>
                               </main>
                             </main>
                           </section>

@@ -5,6 +5,9 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Library } from "./Library";
+import { Store } from "./Store";
+import { Community } from "./Community";
+import { Events } from "./Events";
 
 export function Home() {
   const params = useParams();
@@ -128,11 +131,10 @@ export function Home() {
             ) : (
               ""
             )}
-            {params.page === "featured" ? "featured" : ""}
             {params.page === "library" ? <Library /> : ""}
-            {params.page === "store" ? "store" : ""}
-            {params.page === "community" ? "community" : ""}
-            {params.page === "events" ? "events" : ""}
+            {params.page === "store" ? <Store /> : ""}
+            {params.page === "community" ? <Community /> : ""}
+            {params.page === "events" ? <Events /> : ""}
             {params.page === "profile" ? "profile" : ""}
           </main>
         </main>

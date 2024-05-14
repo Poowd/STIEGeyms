@@ -45,14 +45,6 @@ export class OffCanvas extends React.Component {
               Home
             </button>
           </Link>
-          <Link to={"/featured"}>
-            <button
-              className="btn w-100 py-2 text-start fs-5 text-white"
-              data-bs-dismiss="offcanvas"
-            >
-              Featured
-            </button>
-          </Link>
           <Link to={"/library"}>
             <button
               className="btn w-100 py-2 text-start fs-5 text-white"
