@@ -8,7 +8,7 @@ export class Navbar extends React.Component {
         <nav class="navbar navbar-expand-lg rounded">
           <div class="container-fluid">
             <a class="navbar-brand fw-bold text-info" href="#">
-              EGEYMS
+              EGEYMS ( <span className="text-warning">{this.props.page}</span> )
             </a>
             <button
               class="btn text-white"

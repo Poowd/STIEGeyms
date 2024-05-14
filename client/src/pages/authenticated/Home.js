@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
+import { Library } from "./Library";
 
 export function Home() {
   const params = useParams();
@@ -49,7 +50,7 @@ export function Home() {
       >
         <main className="h-100 w-100 bg-dark rounded shadow-sm p-3 overflow-y-auto text-white">
           <header>
-            <Navbar />
+            <Navbar page={params.page.toUpperCase()} />
           </header>
           <main className="px-3 py-2">
             {params.page === "home" ? (
@@ -103,22 +104,22 @@ export function Home() {
                   <div className="d-flex gap-4 justify-content-center">
                     <Link to={"/library"}>
                       <button className="btn btn-outline-info">
-                        <h3>Library</h3>
+                        <h5 className="">Library</h5>
                       </button>
                     </Link>
                     <Link to={"/store"}>
                       <button className="btn btn-outline-info">
-                        <h3>Store</h3>
+                        <h5 className="">Store</h5>
                       </button>
                     </Link>
                     <Link to={"/community"}>
                       <button className="btn btn-outline-info">
-                        <h3>Community</h3>
+                        <h5 className="">Community</h5>
                       </button>
                     </Link>
                     <Link to={"/events"}>
                       <button className="btn btn-outline-info">
-                        <h3>Events</h3>
+                        <h5 className="">Events</h5>
                       </button>
                     </Link>
                   </div>
@@ -128,7 +129,7 @@ export function Home() {
               ""
             )}
             {params.page === "featured" ? "featured" : ""}
-            {params.page === "library" ? "library" : ""}
+            {params.page === "library" ? <Library /> : ""}
             {params.page === "store" ? "store" : ""}
             {params.page === "community" ? "community" : ""}
             {params.page === "events" ? "events" : ""}
