@@ -108,11 +108,29 @@ app.use("/js", express.static("./node_modules/bootstrap/dist/js"));
         4. DELETE
 ===============================================*/
 
-/*
-    Entity Name: Coach
-*/
-app.post("/coach-selection", (req, res) => {
-  const sql = "SELECT * FROM tbl_coach WHERE Deleted='False'";
+//pull games
+app.post("/list-of-games", (req, res) => {
+  const sql = "SELECT * FROM games WHERE game_status = 'ACTIVE'";
+
+  db.query(sql, (err, data) => {
+    if (err) return res.json({ Message: "Server Sided Error" });
+    return res.json(data);
+  });
+});
+
+//pull stores
+app.post("/list-of-stores", (req, res) => {
+  const sql = "SELECT * FROM store WHERE store_status = 'ACTIVE'";
+
+  db.query(sql, (err, data) => {
+    if (err) return res.json({ Message: "Server Sided Error" });
+    return res.json(data);
+  });
+});
+
+//pull store items
+app.post("/list-of-store-items", (req, res) => {
+  const sql = "SELECT * FROM store_items WHERE item_status = 'ACTIVE'";
 
   db.query(sql, (err, data) => {
     if (err) return res.json({ Message: "Server Sided Error" });

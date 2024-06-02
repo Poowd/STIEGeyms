@@ -8,6 +8,7 @@ import { Library } from "./Library";
 import { Store } from "./Store";
 import { Community } from "./Community";
 import { Events } from "./Events";
+import { AdminView } from "./Admin-View";
 
 export function Home() {
   const params = useParams();
@@ -136,6 +137,7 @@ export function Home() {
             {params.page === "community" ? <Community /> : ""}
             {params.page === "events" ? <Events /> : ""}
             {params.page === "profile" ? "profile" : ""}
+            {params.page === "admin-view" ? <AdminView /> : ""}
           </main>
         </main>
       </main>

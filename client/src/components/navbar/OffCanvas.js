@@ -85,6 +85,14 @@ export class OffCanvas extends React.Component {
               Profile
             </button>
           </Link>
+          <Link to={"/admin-view"}>
+            <button
+              className="btn w-100 py-2 text-start fs-5 text-white"
+              data-bs-dismiss="offcanvas"
+            >
+              Admin View
+            </button>
+          </Link>
           <Link to={"/"}>
             <button
               className="btn w-100 py-2 text-start fs-5 btn-danger"
