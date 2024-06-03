@@ -5,42 +5,12 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
 import { Tag } from "../../components/tag/Tag";
+import { ModalCard } from "../../components/modal/ModalCard";
 
 export function Store() {
   const params = useParams();
-  const [placeholder, ssetPlaceholder] = useState([
-    {
-      image: "https://upload.wikimedia.org/wikipedia/en/1/1b/Outlast2.png",
-      title: "Outlast 2",
-    },
-    {
-      image:
-        "https://m.media-amazon.com/images/M/MV5BNmNhM2NjMTgtNmIyZC00ZmVjLTk4YWItZmZjNGY2NThiNDhkXkEyXkFqcGdeQXVyODU4MDU1NjU@._V1_FMjpg_UX1000_.jpg",
-      title: "Valorant",
-    },
-    {
-      image:
-        "https://images.g2a.com/360x600/1x1x1/terraria-steam-gift-global-i10000000238003/5ebbabf646177c06a555f152",
-      title: "Terraria",
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png",
-      title: "Minecraft",
-    },
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/b/b7/Dead_by_Daylight_Steam_header.jpg",
-      title: "Dead by Daylight",
-    },
-    {
-      image:
-        "https://gamemusic.bn-ent.net/W4vE39ckQu/wp-content/uploads/2024/01/%E9%89%84%E6%8B%B38_%E9%85%8D%E4%BF%A1%E7%94%A8%E3%82%B8%E3%83%A3%E3%82%B1%E3%83%83%E3%83%88_KV1_01-scaled.jpg",
-      title: "Tekken 8",
-    },
-  ]);
+  const [items, setItem] = useState([]);
   const [genres, setGenres] = useState([
     "Action",
     "Adventure",
@@ -56,6 +26,7 @@ export function Store() {
   const [selectedItem, setSelectedItem] = useState({
     image: "",
     title: "",
+    rating: "",
   });
   const [userdetails, setUserDetails] = useState({
     Auth: false,
@@ -90,6 +61,16 @@ export function Store() {
       }
     });
   }, [userdetails.Message]);
+
+  useEffect(() => {
+    axios.post("http://localhost:8081/list-of-store-items").then((res) => {
+      try {
+        setItem(res.data);
+      } catch (error) {
+        console.log("something is lost");
+      }
+    });
+  }, [items]);
 
   return (
     <>
@@ -126,8 +107,8 @@ export function Store() {
               style={{ backgroundColor: "#1e2125" }}
             >
               <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
-                {placeholder.map((item, i) => (
-                  <div class="col">
+                {items.map((item, i) => (
+                  <div class="col" key={i}>
                     <button
                       className="btn p-0"
                       type="button"
@@ -135,14 +116,19 @@ export function Store() {
                       data-bs-target="#gameitem"
                       onClick={() => {
                         setSelectedItem({
-                          image: item.image,
-                          title: item.title,
+                          image:
+                            "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png",
+                          title: item.game_name,
+                          rating: item.game_rating,
                         });
                       }}
                     >
-                      <Card imglink={item.image} gametitle={item.title} />
+                      <Card
+                        imglink="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+                        gametitle={item.game_name}
+                      />
                     </button>
-                    <Modal
+                    <ModalCard
                       id={"gameitem"}
                       title={selectedItem.title}
                       content={
@@ -163,7 +149,12 @@ export function Store() {
                           <section className="col-lg-7">
                             <main>
                               <header>
-                                <h3>Game Title</h3>
+                                <h3>
+                                  {selectedItem.title}{" "}
+                                  <span class="badge text-bg-secondary rounded-pill">
+                                    {selectedItem.rating}
+                                  </span>
+                                </h3>
                                 <p className="m-0 p-0">Developer / Origin</p>
                                 <hr />
                               </header>

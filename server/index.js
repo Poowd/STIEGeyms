@@ -131,7 +131,7 @@ app.post("/list-of-stores", (req, res) => {
 //pull store items
 app.post("/list-of-store-items", (req, res) => {
   const sql =
-    "SELECT * FROM store_items INNER JOIN store ON store_items.item_id = store.store_id INNER JOIN games ON store_items.game_id = games.game_id WHERE store_items.item_status = 'ACTIVE'";
+    "SELECT * FROM store_items INNER JOIN store ON store_items.store_id = store.store_id INNER JOIN games ON store_items.game_id = games.game_id WHERE store_items.item_status = 'ACTIVE'";
 
   db.query(sql, (err, data) => {
     if (err) return res.json({ Message: "Server Sided Error" });
@@ -148,4 +148,67 @@ app.post("/list-of-tournament", (req, res) => {
     if (err) return res.json({ Message: "Server Sided Error" });
     return res.json(data);
   });
+});
+
+//pull user library
+app.post("/insert-game", (req, res) => {
+  const sql =
+    "INSERT INTO games (`game_name`, `game_developer`, `game_publisher`, `game_description`) VALUES (?, ?, ?, ?)";
+
+  db.query(
+    sql,
+    [
+      req.body.name,
+      req.body.developer,
+      req.body.publisher,
+      req.body.description,
+    ],
+    (err, data) => {
+      if (err) return res.json({ Message: "Server Sided Error" });
+      return res.json(data);
+    }
+  );
+});
+
+//pull user library
+app.post("/edit-game", (req, res) => {
+  const sql =
+    "UPDATE games SET game_name = ?, game_developer = ?, game_publisher = ?, game_description = ? WHERE game_id = ?";
+
+  db.query(
+    sql,
+    [
+      req.body.name,
+      req.body.developer,
+      req.body.publisher,
+      req.body.description,
+      req.body.id,
+    ],
+    (err, data) => {
+      if (err) return res.json({ Message: "Server Sided Error" });
+      return res.json(data);
+    }
+  );
+});
+app.post("/archive-game", (req, res) => {
+  const sql = "UPDATE games SET game_status = 'ARCHIVED' WHERE game_id = ?";
+
+  db.query(sql, [req.body.id], (err, data) => {
+    if (err) return res.json({ Message: "Server Sided Error" });
+    return res.json(data);
+  });
+});
+
+//random code generator
+app.get("/random-code-generator", (req, res) => {
+  let result = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  const length = 4;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return res.json(result);
 });

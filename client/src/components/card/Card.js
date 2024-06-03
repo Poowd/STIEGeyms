@@ -4,7 +4,7 @@ export class Card extends React.Component {
   render() {
     return (
       <div
-        className="card w-100"
+        className="card w-100 bg-transparent"
         style={{
           height: "25em",
           aspectRatio: "8/12",

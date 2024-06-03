@@ -5,9 +5,12 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
+import { Modal } from "../../components/modal/ModalCard";
 import { Tag } from "../../components/tag/Tag";
 import { Table } from "../../components/table/Table";
+import { GoPlus } from "react-icons/go";
+import { GoArchive } from "react-icons/go";
+import { GoPencil } from "react-icons/go";
 
 export function TournamentTable() {
   const params = useParams();
@@ -64,7 +67,9 @@ export function TournamentTable() {
           <div className="h-100 overflow-y-auto">
             <div className="w-100 py-3 mb-3 d-flex justify-content-between">
               <h5>List of Tournament</h5>
-              <button className="btn btn-sm btn-primary">add</button>
+              <button className="btn btn-sm btn-primary">
+                <GoPlus />
+              </button>
             </div>
             <Table
               th={
@@ -88,8 +93,12 @@ export function TournamentTable() {
                     <td>{entry.tournament_end_date}</td>
                     <td>{entry.tournament_venue}</td>
                     <td className="d-flex gap-2 justify-content-end">
-                      <button className="btn btn-sm btn-warning">edt</button>
-                      <button className="btn btn-sm btn-danger">del</button>
+                      <button className="btn btn-sm btn-warning">
+                        <GoArchive />
+                      </button>
+                      <button className="btn btn-sm btn-danger">
+                        <GoPencil />
+                      </button>
                     </td>
                   </tr>
                 ) : (

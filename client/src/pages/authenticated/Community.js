@@ -5,7 +5,7 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
+import { Modal } from "../../components/modal/ModalCard";
 import { Tag } from "../../components/tag/Tag";
 
 export function Community() {

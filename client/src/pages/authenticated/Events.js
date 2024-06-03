@@ -5,7 +5,7 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
+import { Modal } from "../../components/modal/ModalCard";
 import { Tag } from "../../components/tag/Tag";
 
 export function Events() {
@@ -47,6 +47,7 @@ export function Events() {
       description: "This is a sample description for the games.",
     },
   ]);
+  const [tournament, setTournament] = useState([]);
   const [selectedItem, setSelectedItem] = useState({
     image: "",
     title: "",
@@ -85,43 +86,57 @@ export function Events() {
     });
   }, [userdetails.Message]);
 
+  useEffect(() => {
+    axios.post("http://localhost:8081/list-of-tournament").then((res) => {
+      try {
+        setTournament(res.data);
+      } catch (error) {
+        console.log("something is lost");
+      }
+    });
+  }, [tournament]);
+
   return (
     <>
       <main className="bg-dark w-100 shadow-sm h-100 px-3 py-1">
         <section className="px-5">
           <section className="px-5">
             <div className="position-relative">
-              <div className="px-3 rounded" style={{ height: "80vh" }}>
-                <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-                  <div className="w-75 h-75 py-3 px-5 rounded shadow-lg">
-                    <header className="h-25 d-flex align-items-center">
-                      <div className="d-flex gap-3">
-                        <div
-                          className="bg-info rounded-circle"
-                          style={{ width: "4em", height: "4em" }}
-                        ></div>
-                        <div>
-                          <h5>Game Masters</h5>
-                          <p>Sub Description</p>
+              {tournament.map((item, i) => (
+                <div className="px-3 rounded" style={{ height: "80vh" }}>
+                  <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+                    <div className="w-75 h-75 py-3 px-5 rounded shadow-lg">
+                      <header className="h-25 d-flex align-items-center">
+                        <div className="d-flex gap-3">
+                          <div
+                            className="bg-info rounded-circle"
+                            style={{ width: "4em", height: "4em" }}
+                          ></div>
+                          <div>
+                            <h5>{item.tournament_organizer}</h5>
+                            <p>{item.date_created}</p>
+                          </div>
                         </div>
-                      </div>
-                    </header>
-                    <main className="h-50 d-flex align-items-center">
-                      <p className="p-0 m-0 fw-light fs-3 mb-5 pb-5 text-center w-100">
-                        <span className="d-block">Hello @Everyone!</span>
-                        <span className="fw-bold d-block fs-1">E-Cup 2024</span>
-                        <span className="fw-semibold d-block fs-5 mb-3">
-                          November 18, 2024 | Philippine MOA Arena
-                        </span>
-                        <span className="">
-                          Everyone is invited for the upcoming Olympics for the
-                          Gaming Community around Philippines.
-                        </span>
-                      </p>
-                    </main>
+                      </header>
+                      <main className="h-50 d-flex align-items-center">
+                        <p className="p-0 m-0 fw-light fs-3 mb-5 pb-5 text-center w-100">
+                          <span className="d-block">Hello Everyone!</span>
+                          <span className="fw-bold d-block fs-1">
+                            {item.tournament_title}
+                          </span>
+                          <span className="fw-semibold d-block fs-5 mb-3">
+                            {item.tournament_start_date} |{" "}
+                            {item.tournament_venue}
+                          </span>
+                          <span className="">
+                            {item.tournament_description}
+                          </span>
+                        </p>
+                      </main>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </section>
         </section>

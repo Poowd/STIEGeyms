@@ -5,7 +5,7 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
+import { Modal } from "../../components/modal/ModalCard";
 import { Tag } from "../../components/tag/Tag";
 import { GameTable } from "../tables/GameTable";
 import { StoreTable } from "../tables/StoreTable";
@@ -58,25 +58,41 @@ export function AdminView() {
               <section className="col-lg-1">
                 <div className="d-grid gap-2">
                   <button
-                    className="btn btn-primary"
+                    className={
+                      c_table === "games"
+                        ? "btn btn-primary fw-bold"
+                        : "btn btn-info"
+                    }
                     onClick={() => setCurrentTable("games")}
                   >
                     Games
                   </button>
                   <button
-                    className="btn btn-primary"
+                    className={
+                      c_table === "stores"
+                        ? "btn btn-primary fw-bold"
+                        : "btn btn-info"
+                    }
                     onClick={() => setCurrentTable("stores")}
                   >
                     Store
                   </button>
                   <button
-                    className="btn btn-primary"
+                    className={
+                      c_table === "store-items"
+                        ? "btn btn-primary fw-bold"
+                        : "btn btn-info"
+                    }
                     onClick={() => setCurrentTable("store-items")}
                   >
                     Store Items
                   </button>
                   <button
-                    className="btn btn-primary"
+                    className={
+                      c_table === "tournament"
+                        ? "btn btn-primary fw-bold"
+                        : "btn btn-info"
+                    }
                     onClick={() => setCurrentTable("tournament")}
                   >
                     Tournament

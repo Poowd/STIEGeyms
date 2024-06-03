@@ -5,8 +5,8 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Link, useParams } from "react-router-dom";
 import { Carousel } from "../../components/carousel/Carousel";
 import { Card } from "../../components/card/Card";
-import { Modal } from "../../components/modal/Modal";
 import { Tag } from "../../components/tag/Tag";
+import { ModalCard } from "../../components/modal/ModalCard";
 
 export function Library() {
   const params = useParams();
@@ -47,9 +47,11 @@ export function Library() {
       description: "This is a sample description for the games.",
     },
   ]);
+  const [library, setLibrary] = useState([]);
   const [selectedItem, setSelectedItem] = useState({
     image: "",
     title: "",
+    rating: "",
   });
   const [userdetails, setUserDetails] = useState({
     Auth: false,
@@ -84,6 +86,18 @@ export function Library() {
       }
     });
   }, [userdetails.Message]);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:8081/list-of-store-items", userdetails.UUID)
+      .then((res) => {
+        try {
+          setLibrary(res.data);
+        } catch (error) {
+          console.log("something is lost");
+        }
+      });
+  }, [library]);
 
   return (
     <>
@@ -148,7 +162,7 @@ export function Library() {
               style={{ backgroundColor: "#1e2125" }}
             >
               <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
-                {placeholder.map((item, i) => (
+                {library.map((item, i) => (
                   <div class="col">
                     <button
                       className="btn p-0"
@@ -157,14 +171,21 @@ export function Library() {
                       data-bs-target="#gameitem"
                       onClick={() => {
                         setSelectedItem({
-                          image: item.image,
-                          title: item.title,
+                          image:
+                            "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png",
+                          title: item.game_name,
+                          rating: item.game_rating,
                         });
                       }}
                     >
-                      <Card imglink={item.image} gametitle={item.title} />
+                      <Card
+                        imglink={
+                          "https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
+                        }
+                        gametitle={item.game_name}
+                      />
                     </button>
-                    <Modal
+                    <ModalCard
                       id={"gameitem"}
                       title={selectedItem.title}
                       content={
@@ -185,7 +206,12 @@ export function Library() {
                           <section className="col-lg-7">
                             <main>
                               <header>
-                                <h3>Game Title</h3>
+                                <h3>
+                                  {selectedItem.title}{" "}
+                                  <span class="badge text-bg-secondary rounded-pill">
+                                    {selectedItem.rating}
+                                  </span>
+                                </h3>
                                 <p className="m-0 p-0">Developer / Origin</p>
                                 <hr />
                               </header>
