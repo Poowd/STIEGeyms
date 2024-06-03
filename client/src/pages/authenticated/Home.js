@@ -54,7 +54,7 @@ export function Home() {
       >
         <main className="h-100 w-100 bg-dark rounded shadow-sm p-3 overflow-y-auto text-white">
           <header>
-            <Navbar page={params.page.toUpperCase()} />
+            <Navbar page={params.page} />
           </header>
           <main className="px-3 py-2">
             {params.page === "home" ? (

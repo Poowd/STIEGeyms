@@ -40,6 +40,40 @@ export function GameTable() {
     description: "",
   });
 
+  const [userdetails, setUserDetails] = useState({
+    Auth: false,
+    UUID: "",
+    USERNAME: "",
+    USER_TYPE: "",
+    AUTH: "",
+    Message: "",
+  });
+
+  useEffect(() => {
+    axios.get("http://localhost:8081").then((res) => {
+      if (res.data.Status === "Success") {
+        setUserDetails({
+          Auth: true,
+          UUID: res.data.UUID,
+          USERNAME: res.data.USERNAME,
+          USER_TYPE: res.data.USER_TYPE,
+          AUTH: res.data.AUTH,
+          Message: res.data.Message,
+        });
+      } else {
+        setUserDetails({
+          Auth: false,
+          UUID: "",
+          UUID: "",
+          USERNAME: "",
+          USER_TYPE: "",
+          AUTH: "",
+          Message: "",
+        });
+      }
+    });
+  }, [userdetails.Message]);
+
   useEffect(() => {
     axios.post("http://localhost:8081/list-of-games").then((res) => {
       try {

@@ -92,7 +92,7 @@ function App() {
               ""
             )}
 
-            <Route path="/*" element={""} />
+            <Route path="/*" element={<Home />} />
           </Routes>
         ) : (
           <Login />
