@@ -9,10 +9,10 @@ import { Modal } from "../../components/modal/Modal";
 import { Tag } from "../../components/tag/Tag";
 import { Table } from "../../components/table/Table";
 
-export function StoreItemTable() {
+export function TournamentTable() {
   const params = useParams();
   const [data, setData] = useState([]);
-  const [items, setItem] = useState([]);
+  const [tournament, setTournament] = useState([]);
   const [userdetails, setUserDetails] = useState({
     Auth: false,
     UUID: "",
@@ -48,14 +48,14 @@ export function StoreItemTable() {
   }, [userdetails.Message]);
 
   useEffect(() => {
-    axios.post("http://localhost:8081/list-of-store-items").then((res) => {
+    axios.post("http://localhost:8081/list-of-tournament").then((res) => {
       try {
-        setItem(res.data);
+        setTournament(res.data);
       } catch (error) {
         console.log("something is lost");
       }
     });
-  }, [items]);
+  }, [tournament]);
 
   return (
     <>
@@ -63,28 +63,30 @@ export function StoreItemTable() {
         <div className="">
           <div className="h-100 overflow-y-auto">
             <div className="w-100 py-3 mb-3 d-flex justify-content-between">
-              <h5>List of Store Items</h5>
+              <h5>List of Tournament</h5>
               <button className="btn btn-sm btn-primary">add</button>
             </div>
             <Table
               th={
                 <tr className="border-bottom border-dark-subtle">
-                  <th>Item ID</th>
-                  <th>Store</th>
+                  <th>Tour. ID</th>
                   <th>Game</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
+                  <th>Title</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Venue</th>
                   <th className="text-end">Action</th>
                 </tr>
               }
-              tb={items.map((entry, i) =>
-                items.length > 0 ? (
+              tb={tournament.map((entry, i) =>
+                tournament.length > 0 ? (
                   <tr>
-                    <td>{entry.item_id}</td>
-                    <td>{entry.store_name}</td>
+                    <td>{entry.tournament_id}</td>
                     <td>{entry.game_name}</td>
-                    <td>{entry.item_quantity}</td>
-                    <td>{entry.item_price}</td>
+                    <td>{entry.tournament_title}</td>
+                    <td>{entry.tournament_start_date}</td>
+                    <td>{entry.tournament_end_date}</td>
+                    <td>{entry.tournament_venue}</td>
                     <td className="d-flex gap-2 justify-content-end">
                       <button className="btn btn-sm btn-warning">edt</button>
                       <button className="btn btn-sm btn-danger">del</button>

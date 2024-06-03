@@ -130,7 +130,19 @@ app.post("/list-of-stores", (req, res) => {
 
 //pull store items
 app.post("/list-of-store-items", (req, res) => {
-  const sql = "SELECT * FROM store_items WHERE item_status = 'ACTIVE'";
+  const sql =
+    "SELECT * FROM store_items INNER JOIN store ON store_items.item_id = store.store_id INNER JOIN games ON store_items.game_id = games.game_id WHERE store_items.item_status = 'ACTIVE'";
+
+  db.query(sql, (err, data) => {
+    if (err) return res.json({ Message: "Server Sided Error" });
+    return res.json(data);
+  });
+});
+
+//pull tournament
+app.post("/list-of-tournament", (req, res) => {
+  const sql =
+    "SELECT * FROM tournament INNER JOIN games ON tournament.game_id = games.game_id WHERE tournament.tournament_status = 'SCHEDULED'";
 
   db.query(sql, (err, data) => {
     if (err) return res.json({ Message: "Server Sided Error" });

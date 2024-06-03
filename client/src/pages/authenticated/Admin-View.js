@@ -10,10 +10,11 @@ import { Tag } from "../../components/tag/Tag";
 import { GameTable } from "../tables/GameTable";
 import { StoreTable } from "../tables/StoreTable";
 import { StoreItemTable } from "../tables/StoreItemTable";
+import { TournamentTable } from "../tables/TournamentTable";
 
 export function AdminView() {
   const params = useParams();
-  const [c_table, setCurrentTable] = useState("");
+  const [c_table, setCurrentTable] = useState("games");
   const [userdetails, setUserDetails] = useState({
     Auth: false,
     UUID: "",
@@ -74,12 +75,19 @@ export function AdminView() {
                   >
                     Store Items
                   </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setCurrentTable("tournament")}
+                  >
+                    Tournament
+                  </button>
                 </div>
               </section>
               <section className="col-lg-11">
                 {c_table === "games" ? <GameTable /> : ""}
                 {c_table === "stores" ? <StoreTable /> : ""}
                 {c_table === "store-items" ? <StoreItemTable /> : ""}
+                {c_table === "tournament" ? <TournamentTable /> : ""}
               </section>
             </main>
           </div>

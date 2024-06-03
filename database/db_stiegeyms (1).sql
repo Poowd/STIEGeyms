@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2024 at 06:30 AM
+-- Generation Time: Jun 03, 2024 at 03:49 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -158,6 +158,61 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tournament`
+--
+
+CREATE TABLE `tournament` (
+  `tournament_id` varchar(25) NOT NULL,
+  `game_id` varchar(25) NOT NULL,
+  `tournament_title` varchar(255) NOT NULL,
+  `tournament_organizer` varchar(255) NOT NULL,
+  `tournament_start_date` varchar(150) NOT NULL,
+  `tournament_end_date` varchar(150) NOT NULL,
+  `tournament_description` text NOT NULL,
+  `tournament_venue` varchar(255) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `tournament_status` enum('SCHEDULED','ON GOING','RESCHEDULED','DONE','CANCELLED') NOT NULL DEFAULT 'SCHEDULED'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tournament`
+--
+
+INSERT INTO `tournament` (`tournament_id`, `game_id`, `tournament_title`, `tournament_organizer`, `tournament_start_date`, `tournament_end_date`, `tournament_description`, `tournament_venue`, `date_created`, `tournament_status`) VALUES
+('01', '01', 'Tournament 1', 'Tournament Organizer', 'Thursday, 6-2-2024', 'Friday, 6-3-2024', 'Best of the Best', 'MS Teams', '2024-06-02 09:39:32', 'SCHEDULED'),
+('02', '02', 'IDK', 'N/A', '2024', '2045', 'survival', 'Online', '2024-06-02 09:43:13', 'SCHEDULED');
+
+--
+-- Triggers `tournament`
+--
+DELIMITER $$
+CREATE TRIGGER `tournament_id` BEFORE INSERT ON `tournament` FOR EACH ROW BEGIN
+
+	SET NEW.tournament_id = CONCAT('0', (SELECT COUNT(*) + 1 FROM tournament));
+    
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction`
+--
+
+CREATE TABLE `transaction` (
+  `transaction_id` varchar(25) NOT NULL,
+  `transaction_origin` varchar(255) NOT NULL,
+  `user_id` varchar(25) NOT NULL,
+  `store_id` varchar(25) NOT NULL,
+  `item_id` varchar(25) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `transaction_status` enum('ACTIVE','ARCHIVED','APPROVAL','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -200,6 +255,22 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_profile`
+--
+
+CREATE TABLE `user_profile` (
+  `user_id` varchar(25) NOT NULL,
+  `uuid` varchar(25) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `user_balance` double NOT NULL,
+  `user_description` text NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_status` enum('ACTIVE','ARCHIVED','APPROVAL','') NOT NULL DEFAULT 'ACTIVE'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -233,6 +304,13 @@ ALTER TABLE `store_items`
   ADD KEY `game_id` (`game_id`);
 
 --
+-- Indexes for table `tournament`
+--
+ALTER TABLE `tournament`
+  ADD PRIMARY KEY (`tournament_id`),
+  ADD KEY `game_id` (`game_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -240,6 +318,13 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `Username` (`Username`),
   ADD UNIQUE KEY `Password` (`Password`),
   ADD UNIQUE KEY `Username_2` (`Username`,`Password`);
+
+--
+-- Indexes for table `user_profile`
+--
+ALTER TABLE `user_profile`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `uuid` (`uuid`);
 
 --
 -- Constraints for dumped tables
@@ -257,6 +342,12 @@ ALTER TABLE `permission`
 ALTER TABLE `store_items`
   ADD CONSTRAINT `store_items_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `store_items_ibfk_2` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tournament`
+--
+ALTER TABLE `tournament`
+  ADD CONSTRAINT `tournament_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
